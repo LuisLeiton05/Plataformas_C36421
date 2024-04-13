@@ -9,7 +9,7 @@ id_proceso=$1
 # Funcion que me imprima la informacion requerida.
 mostrar_informacion () {
     id_proceso=$1
-    linea=$(ps aux | awk 'print{1:11}' | grep "$id_proceso")
+    linea=$(ps aux | awk '{print $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11}' | grep "$id_proceso")
 
 
     # Hacemos variables para poder almacenar nuestros datos.
@@ -18,7 +18,7 @@ mostrar_informacion () {
     cpu=$(echo "$linea" | awk '{print $3}')
     estatus=$(echo "$linea" | awk '{print $8}')
     memoria=$(echo "$linea" | awk '{print $4}') 
-    parent=$(echo "ps -f"| grep "$id_proceso" | awk '{print $3}')
+    parent=$(ps -f| grep "$id_proceso" | awk '{print $3}')
     path=$(readlink /proc/$id_proceso/exe)
 
     # Las imprimimos en el formato deseado.
